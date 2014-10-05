@@ -8,16 +8,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
-import java.nio.charset.Charset;
-import java.util.regex.Pattern;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 
 		File file = new File("test001.c");
-		Charset charset = Charset.defaultCharset();
-		Pattern p = Pattern.compile("(\\w+)(\\W*).*");
 		InputStream is = new FileInputStream(file);
 		Reader r = new BufferedReader(new InputStreamReader(is));
 		StreamTokenizer strt = new StreamTokenizer(r);
