@@ -23,13 +23,13 @@ public class Main {
 			int t = strt.nextToken();
 			switch (t) {
 			case StreamTokenizer.TT_WORD:
-
 				Reserved found = Reserved.find(strt.sval);
-				System.out.print(strt.sval);
 				if (found != null) {
 					System.out.print("*");
+				} else {
+					System.out.print("SYMBOL:");
 				}
-				System.out.println();
+				System.out.println(strt.sval);
 				break;
 			case StreamTokenizer.TT_NUMBER:
 				System.out.println("#" + strt.nval);
@@ -41,31 +41,10 @@ public class Main {
 				done = true;
 				break;
 			default:
-				String symbol = strt.toString().substring(7, 8); // crude way to
-																	// extract
-																	// brackets
-																	// etc.
-				System.out.println(symbol);
+				String punctuation = strt.toString().substring(7, 8); // crude way to extract brackets etc.
+				System.out.println("°" + punctuation);
 			}
 		}
-		// for (String line : lines) {
-		// StringTokenizer st = new StringTokenizer(line);
-		// String token = null;
-		// while (st.hasMoreTokens()) {
-		// token = st.nextToken().trim();
-		//
-		// Matcher m = p.matcher(token);
-		//
-		// if (m.matches()) {
-		//
-		// System.out.println(token + " starts with a word. "
-		// + m.group(1));
-		// } else {
-		// System.out.println(token + " is not a word");
-		// }
-		// }
-		// }
-
 	}
 
 }
