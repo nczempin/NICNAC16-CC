@@ -1,11 +1,11 @@
 int main(){
 	int a;
-	int b;
+	int _b;
 	int c;
 
 	a = 7;
-	b = 25;
-	c = a + b;
+	_b = 25;
+	c = a + _b;
 
 	return c;
 }
