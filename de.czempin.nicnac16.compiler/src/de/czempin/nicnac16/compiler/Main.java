@@ -9,12 +9,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.nio.charset.Charset;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
 
 public class Main {
 
@@ -22,8 +17,6 @@ public class Main {
 
 		File file = new File("test001.c");
 		Charset charset = Charset.defaultCharset();
-		ImmutableList<String> lines = Files.asCharSource(file, charset)
-				.readLines();
 		Pattern p = Pattern.compile("(\\w+)(\\W*).*");
 		InputStream is = new FileInputStream(file);
 		Reader r = new BufferedReader(new InputStreamReader(is));
@@ -34,10 +27,16 @@ public class Main {
 			int t = strt.nextToken();
 			switch (t) {
 			case StreamTokenizer.TT_WORD:
-				System.out.println(strt.sval);
+
+				Reserved found = Reserved.find(strt.sval);
+				System.out.print(strt.sval);
+				if (found != null) {
+					System.out.print("*");
+				}
+				System.out.println();
 				break;
 			case StreamTokenizer.TT_NUMBER:
-				System.out.println("#"+strt.nval);
+				System.out.println("#" + strt.nval);
 				break;
 			case StreamTokenizer.TT_EOL:
 				System.out.println(strt.sval);
@@ -46,7 +45,10 @@ public class Main {
 				done = true;
 				break;
 			default:
-				String symbol = strt.toString().substring(7,8); // crude way to extract brackets etc.
+				String symbol = strt.toString().substring(7, 8); // crude way to
+																	// extract
+																	// brackets
+																	// etc.
 				System.out.println(symbol);
 			}
 		}
