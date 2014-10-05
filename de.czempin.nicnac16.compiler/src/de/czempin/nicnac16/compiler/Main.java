@@ -18,7 +18,7 @@ public class Main {
 		File file = new File("test001.c");
 		Charset charset = Charset.defaultCharset();
 		ImmutableList<String> lines = Files.asCharSource(file, charset).readLines();
-		Pattern p = Pattern.compile("^\\w.*");
+		Pattern p = Pattern.compile("^(\\w+)(\\W*)");
 		for (String line : lines) {
 			StringTokenizer st = new StringTokenizer(line);
 			String token = null;
@@ -28,12 +28,11 @@ public class Main {
 				 Matcher m = p.matcher(token);
 				
 				if (m.matches()){
-					 // do something
-					 System.out.println(token +" starts with a word");
+					
+					 System.out.println(token +" starts with a word. "+m.group(1));
 				 } else {
 						System.out.println(token+" is not a word");				 
 				 }
-				
 			}
 		}
 
