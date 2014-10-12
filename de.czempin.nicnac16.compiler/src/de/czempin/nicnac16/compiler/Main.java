@@ -45,6 +45,7 @@ public class Main {
 				System.out.println("°" + punctuation);
 			}
 		}
+		Expression e = new BinaryExpression("+", new BinaryExpression("-", new VariableExpression("x"), new IntegerExpression(2)), new IntegerExpression(3));
 	}
 
 }
