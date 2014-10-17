@@ -3,6 +3,7 @@ package de.czempin.nicnac16.compiler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,12 +14,17 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		
-		Type returnValue = null;
+		Type returnValue = new Type("int");
 		String name = "main";
-		Signature signature = new Signature();
+		Signature signature = new Signature(null);
 		Block content = new Block();
 		Function f = new Function(returnValue, name, signature, content);
+		f.print();
 
+		//compile();
+	}
+
+	private static void compile() throws FileNotFoundException, IOException {
 		File file = new File("test001.c");
 		InputStream is = new FileInputStream(file);
 		Reader r = new BufferedReader(new InputStreamReader(is));
