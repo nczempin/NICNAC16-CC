@@ -12,6 +12,12 @@ import java.io.StreamTokenizer;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		
+		Type returnValue = null;
+		String name = "main";
+		Signature signature = new Signature();
+		Block content = new Block();
+		Function f = new Function(returnValue, name, signature, content);
 
 		File file = new File("test001.c");
 		InputStream is = new FileInputStream(file);
