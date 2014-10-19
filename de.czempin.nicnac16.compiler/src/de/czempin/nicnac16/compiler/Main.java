@@ -15,27 +15,23 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		
+
 		Type returnValue = Type.INT;
 		String name = "main";
 		Signature signature = new Signature(null);
 		List<Statement> statements = new ArrayList<Statement>();
-		Statement a1 = new Assignment();
-		Statement a2 = new Assignment();
-		Statement d1 = new Declaration(Type.INT,"A");
-		statements.add(new Declaration(Type.INT,"A") );
-		statements.add(new Declaration(Type.INT,"_b"));
-		statements.add(new Declaration(Type.INT,"c7"));
-		statements.add(new Declaration(Type.INT,"d"));
-		statements.add(a1 );
-		statements.add(a1);
-		statements.add(a1 );
-		statements.add(a2 );
+		statements.add(new Declaration(Type.INT, "A"));
+		statements.add(new Declaration(Type.INT, "_b"));
+		statements.add(new Declaration(Type.INT, "c7"));
+		statements.add(new Declaration(Type.INT, "d"));
+		statements.add(new Assignment(new Variable(Type.INT, "A"), new Expression("7")));
+		statements.add(new Assignment(new Variable(Type.INT, "_b"), new Expression("25")));
+		statements.add(new Assignment(new Variable(Type.INT, "c7"), new Expression("A + _b")));
 		Block content = new Block(statements);
 		Function f = new Function(returnValue, name, signature, content);
 		f.print();
 
-		//compile();
+		// compile();
 	}
 
 	private static void compile() throws FileNotFoundException, IOException {
