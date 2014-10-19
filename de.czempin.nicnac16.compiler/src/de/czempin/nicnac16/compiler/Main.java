@@ -16,13 +16,13 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		
-		Type returnValue = new Type("int");
+		Type returnValue = Type.INT;
 		String name = "main";
 		Signature signature = new Signature(null);
 		List<Statement> statements = new ArrayList<Statement>();
 		Statement a1 = new Assignment();
 		Statement a2 = new Assignment();
-		Statement d1 = new Declaration();
+		Statement d1 = new Declaration(Type.INT,"A");
 		statements.add(d1 );
 		statements.add(d1);
 		statements.add(d1);

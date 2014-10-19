@@ -1,10 +1,12 @@
 package de.czempin.nicnac16.compiler;
 
-public class Type {
+public enum Type {
+	INT("int"),CHAR("char")
+	;
 
 	private String name;
 
-	public Type(String string) {
+	private Type(String string) {
 		this.name = string;
 	}
 
