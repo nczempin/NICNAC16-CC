@@ -23,10 +23,10 @@ public class Main {
 		Statement a1 = new Assignment();
 		Statement a2 = new Assignment();
 		Statement d1 = new Declaration(Type.INT,"A");
-		statements.add(d1 );
-		statements.add(d1);
-		statements.add(d1);
-		statements.add(d1);
+		statements.add(new Declaration(Type.INT,"A") );
+		statements.add(new Declaration(Type.INT,"_b"));
+		statements.add(new Declaration(Type.INT,"c7"));
+		statements.add(new Declaration(Type.INT,"d"));
 		statements.add(a1 );
 		statements.add(a1);
 		statements.add(a1 );

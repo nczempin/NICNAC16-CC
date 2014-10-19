@@ -15,11 +15,7 @@ public class Declaration extends Statement {
 		retVal += type.toString();
 		retVal += " ";
 		retVal += symbol.toString();
-		/*
-		 * switch (counter) { case 0: retVal += "int A;"; // declaration break; case 1: retVal += "int _b;"; // declaration break; case 2: retVal += "int c7;";
-		 * // declaration break; case 3: retVal += "int d;"; // declaration break; }
-		 */
-		retVal += "\n";
+		retVal += ";\n";
 
 		return retVal;
 	}
