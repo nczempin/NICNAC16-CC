@@ -20,10 +20,10 @@ public class Statement {
 			retVal += "int d;";
 			break;
 		case 4:
-			retVal += "A=7;";
+			retVal += "A = 7;";
 			break;
 		case 5:
-			retVal += "_b=25;";
+			retVal += "_b = 25;";
 			break;
 		case 6:
 			retVal += "c7 = A + _b;";
