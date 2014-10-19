@@ -13,7 +13,7 @@ public class Block {
 		retVal += "{\n";
 		
 		
-		retVal = convertToString();
+		retVal += convertToString();
 		retVal += "}\n";
 		return retVal;
 	}
