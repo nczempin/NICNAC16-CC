@@ -1,6 +1,10 @@
 package de.czempin.nicnac16.compiler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Block {
+	private List<Statement> statements= new ArrayList<Statement>();
 
 	@Override
 	public String toString() {
@@ -9,16 +13,23 @@ public class Block {
 		retVal += "{\n";
 		
 		
-		retVal += "    int A;\n";
-		retVal += "    int _b;\n";
-		retVal += "    int c7;\n";
-		retVal += "    \n";
-		retVal += "    A=7;_b=25;\n";
-		retVal += "    c7 = A + _b;\n";
-
-		retVal += "    return c7;\n";
+		retVal = convertToString();
 		retVal += "}\n";
 		return retVal;
+	}
+
+	private String convertToString() {
+		String retVal ="";
+
+		for (Statement statement : statements) {
+			retVal+=statement.toString();
+		}
+		return retVal;
+	}
+
+	public Block(List<Statement> statements) {
+		super();
+		this.statements = statements;
 	}
 
 }

@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -17,7 +19,17 @@ public class Main {
 		Type returnValue = new Type("int");
 		String name = "main";
 		Signature signature = new Signature(null);
-		Block content = new Block();
+		List<Statement> statements = new ArrayList<Statement>();
+		Statement s = new Statement();
+		statements.add(s );
+		statements.add(s );
+		statements.add(s );
+		statements.add(s );
+		statements.add(s );
+		statements.add(s );
+		statements.add(s );
+		statements.add(s );
+		Block content = new Block(statements);
 		Function f = new Function(returnValue, name, signature, content);
 		f.print();
 
