@@ -6,4 +6,8 @@ public class BinaryExpression implements Expression{
 		// TODO Auto-generated constructor stub
 	}
 
+	public BinaryExpression(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
 }
