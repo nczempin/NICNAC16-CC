@@ -10,7 +10,7 @@ public class Return extends Statement {
 
 	@Override
 	public String toString() {
-		return "    return  " + expression + ";\n";
+		return "    return " + expression + ";\n";
 	}
 
 }
