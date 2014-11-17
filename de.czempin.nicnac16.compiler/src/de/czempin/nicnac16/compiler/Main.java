@@ -46,6 +46,7 @@ public class Main {
 		StreamTokenizer strt = new StreamTokenizer(r);
 		strt.wordChars('_', '_');
 		boolean done = false;
+		ParseState ps = ParseState.FILE;
 		while (!done) {
 			int t = strt.nextToken();
 			switch (t) {
