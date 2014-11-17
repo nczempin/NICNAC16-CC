@@ -80,13 +80,14 @@ public class Main {
 					}
 				} else {
 					System.out.print("SYMBOL:");
-					currentSymbol = strt.sval;
-					expression += currentSymbol;
 					switch (ps) {
 					case RVALUE:
-						rvalue += currentSymbol;
+						rvalue += strt.sval;
 						break;
 					default:
+						currentSymbol = strt.sval;
+						expression += currentSymbol;
+						break;
 					}
 					if (currentType == null) {
 						// assignment, expect "="
