@@ -61,6 +61,7 @@ public class Main {
 		String rvalue = "";
 		while (!done) {
 			int t = strt.nextToken();
+			int number =(int) strt.nval; //TODO simply casting for now
 			switch (t) {
 			case StreamTokenizer.TT_WORD:
 				Reserved found = Reserved.find(strt.sval);
@@ -104,11 +105,11 @@ public class Main {
 				System.out.println(strt.sval);
 				break;
 			case StreamTokenizer.TT_NUMBER:
-				System.out.println("#" + strt.nval);
-				expression += strt.nval;
+				System.out.println("#" + number);
+				expression += number;
 				switch (ps) {
 				case RVALUE:
-					rvalue += strt.nval;
+					rvalue += number;
 					break;
 				default:
 				}
