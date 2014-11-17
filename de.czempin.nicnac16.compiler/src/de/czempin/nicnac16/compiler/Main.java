@@ -179,9 +179,11 @@ public class Main {
 					switch (ps) {
 					case ASSIGNMENT:
 						System.out.println(currentSymbol + "= something");
+						System.out.println("##END_OF_ASSIGNMENT##");
 						break;
 					case DECLARATION:
 						System.out.println(currentType + " " + currentSymbol);
+						System.out.println("##END_OF_DECLARATION##");
 						break;
 					case FOR:
 					case RETURN:
@@ -197,6 +199,7 @@ public class Main {
 					currentSymbol = null;
 					ps = ParseState.BLOCK;
 				} else if ("=".equals(punctuation)) {
+				} else if ("!".equals(punctuation)) {
 				} else if ("+".equals(punctuation)) {
 				} else if ("<".equals(punctuation)) {
 				} else {
