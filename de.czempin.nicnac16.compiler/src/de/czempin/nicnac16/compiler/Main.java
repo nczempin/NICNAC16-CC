@@ -63,10 +63,21 @@ public class Main {
 					System.out.print("*");
 					if ("INT".equals(found.name())) { // TODO obviously this needs to be expanded and generalized
 						currentType = Type.INT;
+					} else if ("RETURN".equals(found.name())) {
+						ps = ParseState.STATEMENT;
 					}
 				} else {
 					System.out.print("SYMBOL:");
 					currentSymbol = strt.sval;
+					if (currentType == null) {
+						// assignment, expect "="
+						if (ps != ParseState.STATEMENT) {
+							ps = ParseState.ASSIGNMENT;
+						}
+					} else {
+						// declaration, expect ";"
+						ps = ParseState.DECLARATION;
+					}
 				}
 				System.out.println(strt.sval);
 				break;
@@ -109,7 +120,7 @@ public class Main {
 						currentBlock = new Block();
 						currentType = null;
 						currentSymbol = null;
-				} else {
+					} else {
 						throw new ParseException("Syntax Error: not in function context", 0);
 					}
 				} else if ("}".equals(punctuation)) {
@@ -123,10 +134,20 @@ public class Main {
 						throw new ParseException("Syntax Error: not in block context", 0);
 					}
 				} else if (";".equals(punctuation)) {
-					System.out.println(currentType+" "+currentSymbol);
+					switch (ps) {
+					case ASSIGNMENT:
+						System.out.println(currentSymbol + "= something");
+						break;
+					case DECLARATION:
+						System.out.println(currentType + " " + currentSymbol);
+						break;
+					default:
+						System.out.println("unknown (for now) statement");
+					}
 					System.out.println("##END_OF_STATEMENT##");
 					currentType = null;
 					currentSymbol = null;
+					ps = ParseState.BLOCK;
 				} else if ("=".equals(punctuation)) {
 				} else if ("+".equals(punctuation)) {
 				} else {
