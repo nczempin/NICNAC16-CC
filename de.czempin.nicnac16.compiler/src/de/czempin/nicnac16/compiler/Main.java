@@ -44,6 +44,10 @@ public class Main {
 		File file = new File("test002.c");
 		InputStream is = new FileInputStream(file);
 		Reader r = new BufferedReader(new InputStreamReader(is));
+		parse(r);
+	}
+
+	private static void parse(Reader r) throws IOException, ParseException {
 		StreamTokenizer strt = new StreamTokenizer(r);
 		strt.wordChars('_', '_');
 		boolean done = false;
