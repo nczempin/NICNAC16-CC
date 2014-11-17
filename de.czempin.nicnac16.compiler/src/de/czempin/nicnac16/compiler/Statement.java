@@ -1,5 +1,7 @@
 package de.czempin.nicnac16.compiler;
 
+import java.util.List;
+
 public abstract class Statement {
 
 	@Override
@@ -7,6 +9,6 @@ public abstract class Statement {
 				return "UNKNOWN_STATEMENT\n";
 	}
 
-	public abstract void compile();
+	public abstract List<ThreeAddressStatement> compile();
 
 }

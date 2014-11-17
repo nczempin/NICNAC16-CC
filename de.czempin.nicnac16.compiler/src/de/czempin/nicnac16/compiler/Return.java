@@ -1,5 +1,7 @@
 package de.czempin.nicnac16.compiler;
 
+import java.util.List;
+
 public class Return extends Statement {
 
 	private Expression expression;
@@ -14,7 +16,8 @@ public class Return extends Statement {
 	}
 
 	@Override
-	public void compile() {
+	public List<ThreeAddressStatement> compile() {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

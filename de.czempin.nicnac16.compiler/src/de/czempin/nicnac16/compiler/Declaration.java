@@ -1,5 +1,7 @@
 package de.czempin.nicnac16.compiler;
 
+import java.util.List;
+
 public class Declaration extends Statement {
 	private Type type;
 	private String symbol;
@@ -21,7 +23,8 @@ public class Declaration extends Statement {
 	}
 
 	@Override
-	public void compile() {
+	public List<ThreeAddressStatement> compile() {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

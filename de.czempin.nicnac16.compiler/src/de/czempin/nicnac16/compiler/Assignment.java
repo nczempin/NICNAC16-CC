@@ -1,5 +1,7 @@
 package de.czempin.nicnac16.compiler;
 
+import java.util.List;
+
 public class Assignment extends Statement {
 	private Variable variable;
 	private Expression expression;
@@ -20,10 +22,11 @@ public class Assignment extends Statement {
 	}
 
 	@Override
-	public void compile() {
+	public List<ThreeAddressStatement> compile() {
 
 		System.out.println("dest: "+variable);
 		expression.compile();
+		return null;
 	}
 
 }
