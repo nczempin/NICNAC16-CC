@@ -9,12 +9,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 
 		//dummyParse();
 
@@ -39,7 +40,7 @@ public class Main {
 		//f.print();
 	}
 
-	private static void compile() throws FileNotFoundException, IOException {
+	private static void compile() throws FileNotFoundException, IOException, ParseException {
 		File file = new File("test001.c");
 		InputStream is = new FileInputStream(file);
 		Reader r = new BufferedReader(new InputStreamReader(is));
@@ -47,6 +48,9 @@ public class Main {
 		strt.wordChars('_', '_');
 		boolean done = false;
 		ParseState ps = ParseState.FILE;
+		Type currentType = null;
+		String currentSymbol = null;
+		Function currentFunction = null;
 		while (!done) {
 			int t = strt.nextToken();
 			switch (t) {
@@ -54,8 +58,12 @@ public class Main {
 				Reserved found = Reserved.find(strt.sval);
 				if (found != null) {
 					System.out.print("*");
+					if ("INT".equals(found.name())){ //TODO obviously this needs to be expanded and generalized
+						currentType = Type.INT;
+					}
 				} else {
 					System.out.print("SYMBOL:");
+					currentSymbol = strt.sval;
 				}
 				System.out.println(strt.sval);
 				break;
@@ -71,6 +79,25 @@ public class Main {
 			default:
 				String punctuation = strt.toString().substring(7, 8); // crude way to extract brackets etc.
 				System.out.println("°" + punctuation);
+				if ("(".equals(punctuation)){
+					if (currentType==null){
+						throw new ParseException("Syntax Error: function has no return value", 0);
+					}
+					if (currentSymbol==null){
+						throw new ParseException("Syntax Error: function has no name", 0);
+					}
+					currentFunction = new Function(currentType, currentSymbol);
+					System.out.println("##FUNCTION##");
+					ps = ParseState.SIGNATURE;
+				}else if (")".equals(punctuation)){
+					if (ps==ParseState.SIGNATURE){
+						//good
+						System.out.println("##END_OF_SIG##");
+						ps = ParseState.FUNCTION;
+					}else{
+						throw new ParseException("Syntax Error: not in function signature context", 0);
+					}
+				}
 			}
 		}
 		String name = null;
