@@ -41,7 +41,7 @@ public class Main {
 	}
 
 	private static void compile() throws FileNotFoundException, IOException, ParseException {
-		File file = new File("test001.c");
+		File file = new File("test002.c");
 		InputStream is = new FileInputStream(file);
 		Reader r = new BufferedReader(new InputStreamReader(is));
 		StreamTokenizer strt = new StreamTokenizer(r);
@@ -61,17 +61,24 @@ public class Main {
 				Reserved found = Reserved.find(strt.sval);
 				if (found != null) {
 					System.out.print("*");
-					if ("INT".equals(found.name())) { // TODO obviously this needs to be expanded and generalized
+					String name = found.name();
+					if ("INT".equals(name)) { // TODO obviously this needs to be expanded and generalized
 						currentType = Type.INT;
-					} else if ("RETURN".equals(found.name())) {
-						ps = ParseState.STATEMENT;
+					} else if ("RETURN".equals(name)) {
+						ps = ParseState.RETURN;
+					}else if ("FOR".equals(name)){
+						ps = ParseState.FOR;
+					}else if ("WHILE".equals(name)){
+						ps = ParseState.WHILE;
+					}else if ("IF".equals(name)){
+						ps = ParseState.IF;
 					}
 				} else {
 					System.out.print("SYMBOL:");
 					currentSymbol = strt.sval;
 					if (currentType == null) {
 						// assignment, expect "="
-						if (ps != ParseState.STATEMENT) {
+						if (ps == ParseState.BLOCK) {
 							ps = ParseState.ASSIGNMENT;
 						}
 					} else {
@@ -94,21 +101,25 @@ public class Main {
 				String punctuation = strt.toString().substring(7, 8); // crude way to extract brackets etc.
 				System.out.println("°" + punctuation);
 				if ("(".equals(punctuation)) {
-					if (currentType == null) {
-						throw new ParseException("Syntax Error: function has no return value", 0);
+					if (ps == ParseState.DECLARATION) {
+						if (currentType == null) {
+							throw new ParseException("Syntax Error: function has no return value", 0);
+						}
+						if (currentSymbol == null) {
+							throw new ParseException("Syntax Error: function has no name", 0);
+						}
+						currentSignature = new Signature();
+						currentFunction = new Function(currentType, currentSymbol, currentSignature, null);
+						System.out.println("##SIGNATURE##");
+						ps = ParseState.SIGNATURE;
 					}
-					if (currentSymbol == null) {
-						throw new ParseException("Syntax Error: function has no name", 0);
-					}
-					currentSignature = new Signature();
-					currentFunction = new Function(currentType, currentSymbol, currentSignature, null);
-					System.out.println("##SIGNATURE##");
-					ps = ParseState.SIGNATURE;
 				} else if (")".equals(punctuation)) {
 					if (ps == ParseState.SIGNATURE) {
 						// good
 						System.out.println("##END_OF_SIG##");
 						ps = ParseState.FUNCTION;
+					}else if (ps == ParseState.IF){
+						
 					} else {
 						throw new ParseException("Syntax Error: not in function signature context", 0);
 					}
@@ -120,6 +131,8 @@ public class Main {
 						currentBlock = new Block();
 						currentType = null;
 						currentSymbol = null;
+					}else if (ps==ParseState.IF){
+						
 					} else {
 						throw new ParseException("Syntax Error: not in function context", 0);
 					}
@@ -141,6 +154,12 @@ public class Main {
 					case DECLARATION:
 						System.out.println(currentType + " " + currentSymbol);
 						break;
+					case FOR:
+					case RETURN:
+					case WHILE:
+					case IF:
+						System.out.println(ps.name());
+						break;
 					default:
 						System.out.println("unknown (for now) statement");
 					}
@@ -150,6 +169,7 @@ public class Main {
 					ps = ParseState.BLOCK;
 				} else if ("=".equals(punctuation)) {
 				} else if ("+".equals(punctuation)) {
+				} else if ("<".equals(punctuation)) {
 				} else {
 					throw new ParseException("Syntax Error: unknown symbol, " + punctuation, 0);
 				}
