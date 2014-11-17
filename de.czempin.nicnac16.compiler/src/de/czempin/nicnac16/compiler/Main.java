@@ -58,7 +58,7 @@ public class Main {
 		Block currentBlock = new Block();
 		Signature currentSignature = null;
 		String expression = "";
-
+		String rvalue = "";
 		while (!done) {
 			int t = strt.nextToken();
 			switch (t) {
@@ -82,13 +82,21 @@ public class Main {
 					System.out.print("SYMBOL:");
 					currentSymbol = strt.sval;
 					expression += currentSymbol;
+					switch (ps) {
+					case RVALUE:
+						rvalue += currentSymbol;
+						break;
+					default:
+					}
 					if (currentType == null) {
 						// assignment, expect "="
-						if (ps == ParseState.BLOCK) {
+						switch (ps) {
+						case BLOCK:
 							ps = ParseState.ASSIGNMENT;
+							break;
 						}
 					} else {
-						// declaration, expect ";"
+
 						ps = ParseState.DECLARATION;
 					}
 				}
@@ -97,6 +105,12 @@ public class Main {
 			case StreamTokenizer.TT_NUMBER:
 				System.out.println("#" + strt.nval);
 				expression += strt.nval;
+				switch (ps) {
+				case RVALUE:
+					rvalue += strt.nval;
+					break;
+				default:
+				}
 				break;
 			case StreamTokenizer.TT_EOL:
 				System.out.println(strt.sval);
@@ -172,6 +186,7 @@ public class Main {
 						ParseState type = null;
 						if (currentBlock != null) {
 							type = currentBlock.getType();
+
 						}
 						if (type == null) { // outermost block
 
@@ -186,10 +201,17 @@ public class Main {
 					switch (ps) {
 					case ASSIGNMENT:
 						System.out.println(expression);
-						
-						Statement assignment = new Assignment(new Variable(currentType,currentSymbol),new RValue(expression));
-						currentBlock.append(assignment );
+
+						Statement assignment0 = new Assignment(new Variable(currentType, currentSymbol), new RValue(expression));
+						currentBlock.append(assignment0);
 						System.out.println("##END_OF_ASSIGNMENT##");
+						break;
+					case RVALUE:
+						System.out.println(rvalue);
+
+						Statement assignment1 = new Assignment(new Variable(currentType, currentSymbol), new RValue(rvalue));
+						currentBlock.append(assignment1);
+						System.out.println("##END_OF_ASSIGNMENT(RVALUE)##");
 						break;
 					case DECLARATION:
 						System.out.println(currentType + " " + currentSymbol);
@@ -212,13 +234,21 @@ public class Main {
 					ps = ParseState.BLOCK;
 					expression = "";
 				} else if ("=".equals(punctuation)) {
-					expression += punctuation;
+					if (ps.equals(ParseState.ASSIGNMENT)) {
+						ps = ParseState.RVALUE;
+						rvalue="";
+					} else {
+						expression += punctuation;
+					}
 				} else if ("!".equals(punctuation)) {
 					expression += punctuation;
+					rvalue += punctuation;
 				} else if ("+".equals(punctuation)) {
 					expression += punctuation;
+					rvalue += punctuation;
 				} else if ("<".equals(punctuation)) {
 					expression += punctuation;
+					rvalue += punctuation;
 				} else {
 					throw new ParseException("Syntax Error: unknown symbol, " + punctuation, 0);
 				}
