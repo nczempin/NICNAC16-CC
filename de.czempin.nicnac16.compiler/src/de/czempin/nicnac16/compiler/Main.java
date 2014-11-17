@@ -17,9 +17,9 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, ParseException {
 
-		//dummyParse();
+		// dummyParse();
 
-		 compile();
+		compile();
 	}
 
 	private static void dummyParse() {
@@ -37,7 +37,7 @@ public class Main {
 		statements.add(new Return(new VariableExpression("c7")));
 		Block content = new Block(statements);
 		Function f = new Function(returnValue, name, signature, content);
-		//f.print();
+		// f.print();
 	}
 
 	private static void compile() throws FileNotFoundException, IOException, ParseException {
@@ -58,7 +58,7 @@ public class Main {
 				Reserved found = Reserved.find(strt.sval);
 				if (found != null) {
 					System.out.print("*");
-					if ("INT".equals(found.name())){ //TODO obviously this needs to be expanded and generalized
+					if ("INT".equals(found.name())) { // TODO obviously this needs to be expanded and generalized
 						currentType = Type.INT;
 					}
 				} else {
@@ -79,24 +79,43 @@ public class Main {
 			default:
 				String punctuation = strt.toString().substring(7, 8); // crude way to extract brackets etc.
 				System.out.println("°" + punctuation);
-				if ("(".equals(punctuation)){
-					if (currentType==null){
+				if ("(".equals(punctuation)) {
+					if (currentType == null) {
 						throw new ParseException("Syntax Error: function has no return value", 0);
 					}
-					if (currentSymbol==null){
+					if (currentSymbol == null) {
 						throw new ParseException("Syntax Error: function has no name", 0);
 					}
 					currentFunction = new Function(currentType, currentSymbol);
 					System.out.println("##FUNCTION##");
 					ps = ParseState.SIGNATURE;
-				}else if (")".equals(punctuation)){
-					if (ps==ParseState.SIGNATURE){
-						//good
+				} else if (")".equals(punctuation)) {
+					if (ps == ParseState.SIGNATURE) {
+						// good
 						System.out.println("##END_OF_SIG##");
 						ps = ParseState.FUNCTION;
-					}else{
+					} else {
 						throw new ParseException("Syntax Error: not in function signature context", 0);
 					}
+				} else if ("{".equals(punctuation)) {
+					if (ps == ParseState.FUNCTION) {
+						// good
+						System.out.println("##BLOCK##");
+						ps = ParseState.BLOCK;
+					} else {
+						throw new ParseException("Syntax Error: not in function context", 0);
+					}
+				} else if ("}".equals(punctuation)) {
+					if (ps == ParseState.BLOCK) {
+						ps = ParseState.FILE;
+					}else{
+						throw new ParseException("Syntax Error: not in block context", 0);
+					}
+				} else if (";".equals(punctuation)) {
+				} else if ("=".equals(punctuation)) {
+				} else if ("+".equals(punctuation)) {
+			} else {
+					throw new ParseException("Syntax Error: unknown symbol, " + punctuation, 0);
 				}
 			}
 		}

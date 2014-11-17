@@ -1,6 +1,6 @@
 package de.czempin.nicnac16.compiler;
 
 public enum ParseState {
-	FILE, FUNCTION,SIGNATURE
+	FILE, FUNCTION,SIGNATURE, BLOCK
 
 }
