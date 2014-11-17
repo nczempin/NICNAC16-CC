@@ -2,6 +2,8 @@ package de.czempin.nicnac16.compiler;
 
 import java.util.List;
 
+import de.czempin.nicnac16.compiler.threeAddress.ThreeAddressStatement;
+
 public class Assignment extends Statement {
 	private Variable variable;
 	private Expression expression;
