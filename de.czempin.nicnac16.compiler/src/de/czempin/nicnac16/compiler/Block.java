@@ -32,4 +32,7 @@ public class Block {
 		this.statements = statements;
 	}
 
+	public Block() {
+	}
+
 }

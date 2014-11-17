@@ -51,6 +51,9 @@ public class Main {
 		Type currentType = null;
 		String currentSymbol = null;
 		Function currentFunction = null;
+		Block currentBlock = null;
+		Signature currentSignature = null;
+
 		while (!done) {
 			int t = strt.nextToken();
 			switch (t) {
@@ -86,8 +89,9 @@ public class Main {
 					if (currentSymbol == null) {
 						throw new ParseException("Syntax Error: function has no name", 0);
 					}
-					currentFunction = new Function(currentType, currentSymbol);
-					System.out.println("##FUNCTION##");
+					currentSignature = new Signature();
+					currentFunction = new Function(currentType, currentSymbol, currentSignature, null);
+					System.out.println("##SIGNATURE##");
 					ps = ParseState.SIGNATURE;
 				} else if (")".equals(punctuation)) {
 					if (ps == ParseState.SIGNATURE) {
@@ -102,20 +106,24 @@ public class Main {
 						// good
 						System.out.println("##BLOCK##");
 						ps = ParseState.BLOCK;
+						currentBlock = new Block();
 					} else {
 						throw new ParseException("Syntax Error: not in function context", 0);
 					}
 				} else if ("}".equals(punctuation)) {
 					if (ps == ParseState.BLOCK) {
 						System.out.println("##END_OF_BLOCK##");
-						ps = ParseState.FILE; //TODO: allow block nesting, remember the surrounding construct
-					}else{
+
+						currentFunction.setBlock(currentBlock);
+						currentFunction.print();
+						ps = ParseState.FILE; // TODO: allow block nesting, remember the surrounding construct
+					} else {
 						throw new ParseException("Syntax Error: not in block context", 0);
 					}
 				} else if (";".equals(punctuation)) {
 				} else if ("=".equals(punctuation)) {
 				} else if ("+".equals(punctuation)) {
-			} else {
+				} else {
 					throw new ParseException("Syntax Error: unknown symbol, " + punctuation, 0);
 				}
 			}

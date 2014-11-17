@@ -27,4 +27,8 @@ public class Function {
 		System.out.println(content);
 	}
 
+	public void setBlock(Block block) {
+		this.content = block;
+	}
+
 }
