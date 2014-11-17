@@ -57,6 +57,7 @@ public class Main {
 		Function currentFunction = null;
 		Block currentBlock = null;
 		Signature currentSignature = null;
+		String expression = "";
 
 		while (!done) {
 			int t = strt.nextToken();
@@ -94,6 +95,7 @@ public class Main {
 				break;
 			case StreamTokenizer.TT_NUMBER:
 				System.out.println("#" + strt.nval);
+				expression += strt.nval;
 				break;
 			case StreamTokenizer.TT_EOL:
 				System.out.println(strt.sval);
@@ -121,6 +123,7 @@ public class Main {
 					case IF:
 						System.out.println("##CONDITION##");
 						ps = ParseState.CONDITION;
+						expression = "";
 						break;
 					default:
 					}
@@ -130,6 +133,8 @@ public class Main {
 						System.out.println("##END_OF_SIG##");
 						ps = ParseState.FUNCTION;
 					} else if (ps == ParseState.CONDITION) {
+						System.out.print(currentSymbol);
+						System.out.println(expression);
 						System.out.println("##END_OF_CONDITION##");
 						ps = ParseState.BLOCK;
 					} else {
@@ -199,9 +204,13 @@ public class Main {
 					currentSymbol = null;
 					ps = ParseState.BLOCK;
 				} else if ("=".equals(punctuation)) {
+					expression += punctuation;
 				} else if ("!".equals(punctuation)) {
+					expression += punctuation;
 				} else if ("+".equals(punctuation)) {
+					expression += punctuation;
 				} else if ("<".equals(punctuation)) {
+					expression += punctuation;
 				} else {
 					throw new ParseException("Syntax Error: unknown symbol, " + punctuation, 0);
 				}
