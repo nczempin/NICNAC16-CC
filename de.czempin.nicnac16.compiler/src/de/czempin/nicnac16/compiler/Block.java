@@ -44,4 +44,9 @@ public class Block {
 		this.type = type;
 	}
 
+	public void append(Statement assignment) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

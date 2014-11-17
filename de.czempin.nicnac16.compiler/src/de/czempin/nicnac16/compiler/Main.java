@@ -55,7 +55,7 @@ public class Main {
 		Type currentType = null;
 		String currentSymbol = null;
 		Function currentFunction = null;
-		Block currentBlock = null;
+		Block currentBlock = new Block();
 		Signature currentSignature = null;
 		String expression = "";
 
@@ -81,7 +81,7 @@ public class Main {
 				} else {
 					System.out.print("SYMBOL:");
 					currentSymbol = strt.sval;
-					expression +=currentSymbol;
+					expression += currentSymbol;
 					if (currentType == null) {
 						// assignment, expect "="
 						if (ps == ParseState.BLOCK) {
@@ -142,7 +142,7 @@ public class Main {
 						throw new ParseException("Syntax Error: not in function signature context", 0);
 					}
 				} else if ("{".equals(punctuation)) {
-					expression ="";
+					expression = "";
 					ParseState type = null;
 					if (currentBlock != null) {
 						type = currentBlock.getType();
@@ -153,7 +153,6 @@ public class Main {
 							System.out.println("##BLOCK##");
 							ps = ParseState.BLOCK;
 							currentBlock.setType(ps);
-							currentBlock = new Block();
 							currentType = null;
 							currentSymbol = null;
 							break;
@@ -165,6 +164,7 @@ public class Main {
 						default:
 							throw new ParseException("Syntax Error: unexpected context", 0);
 						}
+						currentBlock = new Block();
 					}
 				} else if ("}".equals(punctuation)) {
 					if (ps == ParseState.BLOCK) {
@@ -186,17 +186,22 @@ public class Main {
 					switch (ps) {
 					case ASSIGNMENT:
 						System.out.println(expression);
+						
+						Statement assignment = new Assignment(new Variable(currentType,currentSymbol),new RValue(expression));
+						currentBlock.append(assignment );
 						System.out.println("##END_OF_ASSIGNMENT##");
 						break;
 					case DECLARATION:
 						System.out.println(currentType + " " + currentSymbol);
 						System.out.println("##END_OF_DECLARATION##");
 						break;
-					case FOR:
 					case RETURN:
+						System.out.println("return " + expression);
+						break;
 					case WHILE:
+					case FOR:
 					case IF:
-						System.out.println(ps.name());
+						System.out.println("TODO" + ps.name());
 						break;
 					default:
 						System.out.println("unknown (for now) statement");
@@ -205,7 +210,7 @@ public class Main {
 					currentType = null;
 					currentSymbol = null;
 					ps = ParseState.BLOCK;
-					expression="";
+					expression = "";
 				} else if ("=".equals(punctuation)) {
 					expression += punctuation;
 				} else if ("!".equals(punctuation)) {
