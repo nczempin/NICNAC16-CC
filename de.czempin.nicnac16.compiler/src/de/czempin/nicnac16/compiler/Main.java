@@ -16,6 +16,12 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
+		//dummyParse();
+
+		 compile();
+	}
+
+	private static void dummyParse() {
 		Type returnValue = Type.INT;
 		String name = "main";
 		Signature signature = new Signature(null);
@@ -30,9 +36,7 @@ public class Main {
 		statements.add(new Return(new VariableExpression("c7")));
 		Block content = new Block(statements);
 		Function f = new Function(returnValue, name, signature, content);
-		f.print();
-
-		// compile();
+		//f.print();
 	}
 
 	private static void compile() throws FileNotFoundException, IOException {
@@ -68,7 +72,12 @@ public class Main {
 				System.out.println("°" + punctuation);
 			}
 		}
-		Expression e = new BinaryExpression("+", new BinaryExpression("-", new VariableExpression("x"), new IntegerExpression(2)), new IntegerExpression(3));
+		String name = null;
+		Type returnValue = null;
+		Block content = null;
+		Signature signature = null;
+		Function f = new Function(returnValue, name, signature, content);
+		f.print();
 	}
 
 }
