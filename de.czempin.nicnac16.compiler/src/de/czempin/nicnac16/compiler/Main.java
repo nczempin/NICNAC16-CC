@@ -107,7 +107,9 @@ public class Main {
 						System.out.println("##BLOCK##");
 						ps = ParseState.BLOCK;
 						currentBlock = new Block();
-					} else {
+						currentType = null;
+						currentSymbol = null;
+				} else {
 						throw new ParseException("Syntax Error: not in function context", 0);
 					}
 				} else if ("}".equals(punctuation)) {
@@ -121,6 +123,10 @@ public class Main {
 						throw new ParseException("Syntax Error: not in block context", 0);
 					}
 				} else if (";".equals(punctuation)) {
+					System.out.println(currentType+" "+currentSymbol);
+					System.out.println("##END_OF_STATEMENT##");
+					currentType = null;
+					currentSymbol = null;
 				} else if ("=".equals(punctuation)) {
 				} else if ("+".equals(punctuation)) {
 				} else {
