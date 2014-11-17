@@ -11,4 +11,10 @@ public class VariableExpression implements Expression{
 		public String toString() {
 			return string;
 		}
+
+		@Override
+		public void compile() {
+			// TODO Auto-generated method stub
+			
+		}
 }

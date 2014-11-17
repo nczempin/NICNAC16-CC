@@ -1,5 +1,7 @@
 package de.czempin.nicnac16.compiler;
 
+import java.util.List;
+
 public class Function {
 
 	private Type returnType;
@@ -29,6 +31,10 @@ public class Function {
 
 	public void setBlock(Block block) {
 		this.content = block;
+	}
+
+	public void compile() {
+		content.compile();
 	}
 
 }

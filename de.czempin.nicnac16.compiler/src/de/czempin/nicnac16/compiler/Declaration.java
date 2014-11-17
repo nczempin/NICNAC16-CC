@@ -20,4 +20,10 @@ public class Declaration extends Statement {
 		return retVal;
 	}
 
+	@Override
+	public void compile() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

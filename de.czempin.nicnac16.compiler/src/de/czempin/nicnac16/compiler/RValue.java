@@ -5,7 +5,8 @@ public class RValue implements Expression {
 	private String string;
 
 	public RValue(String expression) {
-		this.string = expression;	}
+		this.string = expression;
+	}
 
 	@Override
 	public String toString() {
@@ -18,6 +19,11 @@ public class RValue implements Expression {
 
 	public void setString(String string) {
 		this.string = string;
+	}
+
+	@Override
+	public void compile() {
+		System.out.println(string);
 	}
 
 }

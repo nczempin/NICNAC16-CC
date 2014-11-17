@@ -6,4 +6,10 @@ public class IntegerExpression implements Expression{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void compile() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -193,7 +193,7 @@ public class Main {
 						if (type == null) { // outermost block
 
 							currentFunction.setBlock(currentBlock);
-							currentFunction.print();
+							
 							ps = ParseState.FILE; // TODO: allow block nesting, remember the surrounding construct
 						}
 					} else {
@@ -256,6 +256,8 @@ public class Main {
 				}
 			}
 		}
+		currentFunction.print();
+		currentFunction.compile();
 	}
 
 }

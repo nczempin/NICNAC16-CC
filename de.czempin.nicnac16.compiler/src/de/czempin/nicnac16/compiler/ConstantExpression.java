@@ -12,4 +12,9 @@ public class ConstantExpression implements Expression {
 		return string;
 	}
 
+	@Override
+	public void compile() {
+		System.out.println(string);
+	}
+
 }

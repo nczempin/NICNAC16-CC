@@ -13,4 +13,10 @@ public class Return extends Statement {
 		return "    return " + expression + ";\n";
 	}
 
+	@Override
+	public void compile() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
