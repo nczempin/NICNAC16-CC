@@ -70,11 +70,11 @@ public class Main {
 						currentType = Type.INT;
 					} else if ("RETURN".equals(name)) {
 						ps = ParseState.RETURN;
-					}else if ("FOR".equals(name)){
+					} else if ("FOR".equals(name)) {
 						ps = ParseState.FOR;
-					}else if ("WHILE".equals(name)){
+					} else if ("WHILE".equals(name)) {
 						ps = ParseState.WHILE;
-					}else if ("IF".equals(name)){
+					} else if ("IF".equals(name)) {
 						ps = ParseState.IF;
 					}
 				} else {
@@ -122,31 +122,46 @@ public class Main {
 						// good
 						System.out.println("##END_OF_SIG##");
 						ps = ParseState.FUNCTION;
-					}else if (ps == ParseState.IF){
-						
+					} else if (ps == ParseState.IF) {
+
 					} else {
 						throw new ParseException("Syntax Error: not in function signature context", 0);
 					}
 				} else if ("{".equals(punctuation)) {
-					if (ps == ParseState.FUNCTION) {
-						// good
-						System.out.println("##BLOCK##");
-						ps = ParseState.BLOCK;
-						currentBlock = new Block();
-						currentType = null;
-						currentSymbol = null;
-					}else if (ps==ParseState.IF){
-						
-					} else {
-						throw new ParseException("Syntax Error: not in function context", 0);
+					ParseState type = null;
+					if (currentBlock != null) {
+						type = currentBlock.getType();
+					}
+					if (type != null) {
+						switch (type) {
+						case FUNCTION:
+								System.out.println("##BLOCK##");
+							ps = ParseState.BLOCK;
+							currentBlock.setType(ps);
+							currentBlock = new Block();
+							currentType = null;
+							currentSymbol = null;
+							break;
+						case IF:
+							break;
+
+						default:
+							throw new ParseException("Syntax Error: unexpected context", 0);
+						}
 					}
 				} else if ("}".equals(punctuation)) {
 					if (ps == ParseState.BLOCK) {
 						System.out.println("##END_OF_BLOCK##");
+						ParseState type = null;
+						if (currentBlock != null) {
+							type = currentBlock.getType();
+						}
+						if (type == null) { // outermost block
 
-						currentFunction.setBlock(currentBlock);
-						currentFunction.print();
-						ps = ParseState.FILE; // TODO: allow block nesting, remember the surrounding construct
+							currentFunction.setBlock(currentBlock);
+							currentFunction.print();
+							ps = ParseState.FILE; // TODO: allow block nesting, remember the surrounding construct
+						}
 					} else {
 						throw new ParseException("Syntax Error: not in block context", 0);
 					}

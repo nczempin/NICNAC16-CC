@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Block {
 	private List<Statement> statements= new ArrayList<Statement>();
+	private ParseState type;
 
 	@Override
 	public String toString() {
@@ -33,6 +34,14 @@ public class Block {
 	}
 
 	public Block() {
+	}
+
+	public ParseState getType() {
+		return this.type;
+	}
+
+	public void setType(ParseState type) {
+		this.type = type;
 	}
 
 }
