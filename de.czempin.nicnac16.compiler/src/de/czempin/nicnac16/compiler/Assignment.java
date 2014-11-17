@@ -1,12 +1,18 @@
 package de.czempin.nicnac16.compiler;
 
+import java.util.List;
+
+import de.czempin.nicnac16.compiler.threeAddress.ThreeAddressStatement;
+
 public class Assignment extends Statement {
 	private Variable variable;
 	private Expression expression;
+
 	public Assignment(Variable variable, Expression expression) {
 		this.variable = variable;
 		this.expression = expression;
 	}
+
 	@Override
 	public String toString() {
 		String retVal = "    ";
@@ -15,6 +21,14 @@ public class Assignment extends Statement {
 		retVal += expression.toString();
 		retVal += ";\n";
 		return retVal;
+	}
+
+	@Override
+	public List<ThreeAddressStatement> compile() {
+
+		System.out.println("dest: "+variable);
+		expression.compile();
+		return null;
 	}
 
 }
