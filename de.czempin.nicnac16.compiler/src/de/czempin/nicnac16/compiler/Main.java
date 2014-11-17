@@ -141,6 +141,7 @@ public class Main {
 						throw new ParseException("Syntax Error: not in function signature context", 0);
 					}
 				} else if ("{".equals(punctuation)) {
+					expression ="";
 					ParseState type = null;
 					if (currentBlock != null) {
 						type = currentBlock.getType();
@@ -183,7 +184,7 @@ public class Main {
 				} else if (";".equals(punctuation)) {
 					switch (ps) {
 					case ASSIGNMENT:
-						System.out.println(currentSymbol + "= something");
+						System.out.println(currentSymbol +expression);
 						System.out.println("##END_OF_ASSIGNMENT##");
 						break;
 					case DECLARATION:
@@ -203,6 +204,7 @@ public class Main {
 					currentType = null;
 					currentSymbol = null;
 					ps = ParseState.BLOCK;
+					expression="";
 				} else if ("=".equals(punctuation)) {
 					expression += punctuation;
 				} else if ("!".equals(punctuation)) {
