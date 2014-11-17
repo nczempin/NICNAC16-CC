@@ -105,7 +105,8 @@ public class Main {
 				String punctuation = strt.toString().substring(7, 8); // crude way to extract brackets etc.
 				System.out.println("°" + punctuation);
 				if ("(".equals(punctuation)) {
-					if (ps == ParseState.DECLARATION) {
+					switch (ps) {
+					case DECLARATION:
 						if (currentType == null) {
 							throw new ParseException("Syntax Error: function has no return value", 0);
 						}
@@ -116,14 +117,21 @@ public class Main {
 						currentFunction = new Function(currentType, currentSymbol, currentSignature, null);
 						System.out.println("##SIGNATURE##");
 						ps = ParseState.SIGNATURE;
+						break;
+					case IF:
+						System.out.println("##CONDITION##");
+						ps = ParseState.CONDITION;
+						break;
+					default:
 					}
 				} else if (")".equals(punctuation)) {
 					if (ps == ParseState.SIGNATURE) {
 						// good
 						System.out.println("##END_OF_SIG##");
 						ps = ParseState.FUNCTION;
-					} else if (ps == ParseState.IF) {
-
+					} else if (ps == ParseState.CONDITION) {
+						System.out.println("##END_OF_CONDITION##");
+						ps = ParseState.BLOCK;
 					} else {
 						throw new ParseException("Syntax Error: not in function signature context", 0);
 					}
@@ -135,7 +143,7 @@ public class Main {
 					if (type != null) {
 						switch (type) {
 						case FUNCTION:
-								System.out.println("##BLOCK##");
+							System.out.println("##BLOCK##");
 							ps = ParseState.BLOCK;
 							currentBlock.setType(ps);
 							currentBlock = new Block();
@@ -143,6 +151,8 @@ public class Main {
 							currentSymbol = null;
 							break;
 						case IF:
+							currentType = null;
+							currentSymbol = null;
 							break;
 
 						default:
