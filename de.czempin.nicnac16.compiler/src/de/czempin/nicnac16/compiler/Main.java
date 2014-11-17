@@ -107,7 +107,8 @@ public class Main {
 					}
 				} else if ("}".equals(punctuation)) {
 					if (ps == ParseState.BLOCK) {
-						ps = ParseState.FILE;
+						System.out.println("##END_OF_BLOCK##");
+						ps = ParseState.FILE; //TODO: allow block nesting, remember the surrounding construct
 					}else{
 						throw new ParseException("Syntax Error: not in block context", 0);
 					}
@@ -119,12 +120,6 @@ public class Main {
 				}
 			}
 		}
-		String name = null;
-		Type returnValue = null;
-		Block content = null;
-		Signature signature = null;
-		Function f = new Function(returnValue, name, signature, content);
-		f.print();
 	}
 
 }
