@@ -41,7 +41,7 @@ public class Main {
 	}
 
 	private static void compile() throws FileNotFoundException, IOException, ParseException {
-		File file = new File("test002.c");
+		File file = new File("test001.c");
 		InputStream is = new FileInputStream(file);
 		Reader r = new BufferedReader(new InputStreamReader(is));
 		parse(r);
@@ -81,6 +81,7 @@ public class Main {
 				} else {
 					System.out.print("SYMBOL:");
 					currentSymbol = strt.sval;
+					expression +=currentSymbol;
 					if (currentType == null) {
 						// assignment, expect "="
 						if (ps == ParseState.BLOCK) {
@@ -184,7 +185,7 @@ public class Main {
 				} else if (";".equals(punctuation)) {
 					switch (ps) {
 					case ASSIGNMENT:
-						System.out.println(currentSymbol +expression);
+						System.out.println(expression);
 						System.out.println("##END_OF_ASSIGNMENT##");
 						break;
 					case DECLARATION:
