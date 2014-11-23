@@ -31,10 +31,10 @@ public class Main {
 		statements.add(new Declaration(Type.INT, "_b"));
 		statements.add(new Declaration(Type.INT, "c7"));
 		statements.add(new Declaration(Type.INT, "d"));
-		statements.add(new Assignment(new Variable(Type.INT, "A"), new Expression("7")));
-		statements.add(new Assignment(new Variable(Type.INT, "_b"), new Expression("25")));
-		statements.add(new Assignment(new Variable(Type.INT, "c7"), new Expression("A + _b")));
-		statements.add(new Return(new Expression("c7")));
+		statements.add(new Assignment(new Variable(Type.INT, "A"), new ConstantExpression("7")));
+		statements.add(new Assignment(new Variable(Type.INT, "_b"), new ConstantExpression("25")));
+		statements.add(new Assignment(new Variable(Type.INT, "c7"), new BinaryExpression("A + _b")));
+		statements.add(new Return(new VariableExpression("c7")));
 		Block content = new Block(statements);
 		Function f = new Function(returnValue, name, signature, content);
 		// f.print();
