@@ -1,0 +1,11 @@
+# Java build artifacts
+/bin/
+*.class
+.settings/
+.classpath
+.project
+.idea/
+target/
+
+# Dependency libraries
+/de.czempin.nicnac16.compiler/lib/
