@@ -122,7 +122,7 @@ public class Main {
 				break;
 			default:
 				String punctuation = strt.toString().substring(7, 8); // crude way to extract brackets etc.
-				System.out.println("°" + punctuation);
+				System.out.println(punctuation);
 				if ("(".equals(punctuation)) {
 					switch (ps) {
 					case DECLARATION:
