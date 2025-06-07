@@ -23,41 +23,30 @@ NICNAC16-CC is a minimal C compiler specifically designed for the [NICNAC16 CPU 
 ## Setup Instructions
 
 ### Prerequisites
-- Java Development Kit (JDK) 8 or higher
-- [Git LFS](https://git-lfs.github.com/) for binary dependencies
+- A C++20 compatible compiler (tested with `g++` 13)
 - Basic understanding of C programming and compiler concepts
 
 ### Installation
-1. Install Git LFS if you haven't already:
-   ```
-   git lfs install
-   ```
-
-2. Clone the repository:
+1. Clone the repository:
    ```
    git clone https://github.com/nczempin/NICNAC16-CC.git
    cd NICNAC16-CC
    ```
 
-3. Ensure all dependencies are downloaded:
-   ```
-   git lfs pull
-   ```
-
 ### Running the Compiler
-1. Navigate to the compiler directory:
-   ```
-   cd de.czempin.nicnac16.compiler
-   ```
-
-2. Compile a C file:
-   ```
-   java -cp lib/*:bin de.czempin.nicnac16.compiler.Main path/to/your/file.c
+1. Ensure `g++` is installed (see `setup.sh`):
+   ```bash
+   ./setup.sh
    ```
 
-3. Example with included test file:
+2. Build the compiler:
+   ```bash
+   make
    ```
-   java -cp lib/*:bin de.czempin.nicnac16.compiler.Main test001.c
+
+3. Run the compiler with an example file:
+   ```bash
+   make run ARGS=samples/test001.c
    ```
 
 ## Project Scope
@@ -73,10 +62,10 @@ NICNAC16-CC is a minimal C compiler specifically designed for the [NICNAC16 CPU 
 - Not optimized for performance or code size (educational focus)
 
 ## Repository Structure
-- `de.czempin.nicnac16.compiler/` - Main compiler source code
-  - `src/` - Java source files implementing the compiler
-  - `lib/` - External dependencies (JUnit, Hamcrest, Guava)
-  - `test*.c` - Example C files for testing the compiler
+- `src/` - C++20 source files implementing the compiler
+- `samples/` - Example C programs used for testing
+- `setup.sh` - script to check build prerequisites
+- `Makefile` - simple build rules
 
 ## Related Projects
 - [NICNAC16](https://github.com/nczempin/NICNAC16) - The CPU architecture this compiler targets
